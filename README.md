@@ -8,13 +8,14 @@ The Codex Security plugin is built specifically for Codex and integrates with Co
 
 ## Install
 
-Clone or copy this repository into the skill directory used by your coding agent, preserving `SKILL.md` at the skill root:
+Clone the repository, then copy the self-contained `security-review/` directory into the skill directory used by your coding agent:
 
 ```sh
-git clone https://github.com/angelol/security-audit-skill.git security-review
+git clone https://github.com/angelol/security-audit-skill.git
+cp -R security-audit-skill/security-review /path/to/your-agent/skills/security-review
 ```
 
-If your agent does not support automatic skill discovery, point it at `SKILL.md` when requesting security work.
+Alternatively, configure the coding harness to load `security-review/SKILL.md` directly from the checkout. If the harness does not support automatic skill discovery, point it at that file when requesting security work.
 
 ## Example requests
 
@@ -44,24 +45,24 @@ The scripts are optional and require only Python 3.
 Create and seal canonical review artifacts:
 
 ```sh
-python3 scripts/security_review.py init \
+python3 security-review/scripts/security_review.py init \
   --target /path/to/repository \
   --output /tmp/security-review \
   --mode standard
 
-python3 scripts/security_review.py validate --scan-dir /tmp/security-review
-python3 scripts/security_review.py finalize --scan-dir /tmp/security-review
+python3 security-review/scripts/security_review.py validate --scan-dir /tmp/security-review
+python3 security-review/scripts/security_review.py finalize --scan-dir /tmp/security-review
 ```
 
 Build deterministic source inventories and resolve nested security policies:
 
 ```sh
-python3 scripts/scope_tools.py inventory \
+python3 security-review/scripts/scope_tools.py inventory \
   --repo /path/to/repository \
   --output /tmp/security-review/inventory.jsonl \
   --mode standard
 
-python3 scripts/scope_tools.py policy \
+python3 security-review/scripts/scope_tools.py policy \
   --repo /path/to/repository \
   --scope src/component
 ```
@@ -71,18 +72,21 @@ Use `python` instead of `python3` when that is the configured interpreter, such 
 ## Repository layout
 
 ```text
-SKILL.md
-references/
-  adjacent-workflows.md
-  artifact-contract.md
-  evidence-pipeline.md
-  review-modes.md
-scripts/
-  scope_tools.py
-  security_review.py
+README.md
+LICENSE
+security-review/
+  SKILL.md
+  references/
+    adjacent-workflows.md
+    artifact-contract.md
+    evidence-pipeline.md
+    review-modes.md
+  scripts/
+    scope_tools.py
+    security_review.py
 ```
 
-`SKILL.md` routes each request and loads only the references needed for that workflow. The helper scripts create artifacts and inventories; they never decide whether code is vulnerable.
+The repository-level README and license stay outside the installed skill. `security-review/SKILL.md` routes each request and loads only the references needed for that workflow. The helper scripts create artifacts and inventories; they never decide whether code is vulnerable.
 
 ## Origin and relationship to Codex Security
 
