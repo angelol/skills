@@ -1,10 +1,10 @@
 # Security Review Skill
 
-A portable, evidence-led application security skill for coding agents.
+A portable adaptation of the security-review workflows in OpenAI's Codex Security plugin, packaged as a standard skill for coding agents.
 
 It supports repository audits, Git diff reviews, deep multi-pass scans, threat modeling, finding validation, attack-path analysis, security fixes, vulnerability reports, hardening proposals, `SECURITY.md` policy work, and approval-gated issue tracking.
 
-The skill uses ordinary Markdown and Python standard-library scripts. It has no MCP server, connector, UI form, hosted service, or agent-specific runtime dependency.
+The Codex Security plugin is built specifically for Codex and integrates with Codex-native orchestration, MCP tools, workbench state, and UI. This skill offers roughly the same user-facing workflow coverage using ordinary Markdown and Python standard-library scripts, so it can work with any coding harness that supports skills. It has no MCP server, connector, UI form, hosted service, or agent-specific runtime dependency.
 
 ## Install
 
@@ -84,9 +84,11 @@ scripts/
 
 `SKILL.md` routes each request and loads only the references needed for that workflow. The helper scripts create artifacts and inventories; they never decide whether code is vulnerable.
 
-## Design note
+## Origin and relationship to Codex Security
 
-This is an independent, clean-room implementation of a portable security-review methodology. It does not include proprietary plugin code and does not require the Codex Security plugin.
+This skill is based on the workflows and capabilities of OpenAI's Codex Security plugin. It preserves the plugin's evidence-led phase separation, conservative finding validation, attack-path and severity analysis, coverage accounting, remediation discipline, and adjacent security workflows in a portable skill format.
+
+The implementation is an independent adaptation and does not include proprietary plugin source code. It intentionally replaces Codex-specific MCP calls, durable workbench orchestration, desktop progress UI, native forms, connector integrations, and token accounting with agent-neutral instructions and local filesystem artifacts. As a result, it aims for roughly equivalent functional coverage rather than exact runtime or UI parity with the Codex Security plugin.
 
 ## License
 
