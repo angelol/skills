@@ -86,9 +86,9 @@ scripts/
 
 ## Origin and relationship to Codex Security
 
-This skill is based on the workflows and capabilities of OpenAI's Codex Security plugin. It preserves the plugin's evidence-led phase separation, conservative finding validation, attack-path and severity analysis, coverage accounting, remediation discipline, and adjacent security workflows in a portable skill format.
+This skill is based on and adapted from OpenAI's [Codex Security plugin](https://github.com/openai/codex-security), which is open source under the Apache License 2.0. It preserves the plugin's evidence-led phase separation, conservative finding validation, attack-path and severity analysis, coverage accounting, remediation discipline, and adjacent security workflows in a portable skill format.
 
-The implementation is an independent adaptation and does not include proprietary plugin source code. It intentionally replaces Codex-specific MCP calls, durable workbench orchestration, desktop progress UI, native forms, connector integrations, and token accounting with agent-neutral instructions and local filesystem artifacts. As a result, it aims for roughly equivalent functional coverage rather than exact runtime or UI parity with the Codex Security plugin.
+The Codex Security plugin uses Codex-specific MCP calls, durable workbench orchestration, desktop progress UI, native forms, connector integrations, and token accounting. This adaptation replaces those pieces with agent-neutral instructions and local filesystem artifacts so the same broad set of security workflows can run in any coding harness that supports skills. It aims for roughly equivalent functional coverage rather than exact runtime or UI parity.
 
 ## License
 
