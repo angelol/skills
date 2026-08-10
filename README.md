@@ -8,7 +8,17 @@ The Codex Security plugin is built specifically for Codex and integrates with Co
 
 ## Install
 
-Clone the repository, then copy the self-contained `security-review/` directory into the skill directory used by your coding agent:
+Tell your coding agent:
+
+```text
+Install the security-review skill from https://github.com/angelol/security-audit-skill. The installable skill is in the security-review/ subdirectory.
+```
+
+The agent can fetch the repository, locate `security-review/SKILL.md`, and install the self-contained skill using the conventions of its own harness.
+
+### Manual fallback
+
+If the coding harness cannot install a skill from a repository URL, clone the repository and copy the skill directory yourself:
 
 ```sh
 git clone https://github.com/angelol/security-audit-skill.git
