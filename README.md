@@ -10,11 +10,7 @@ The Codex Security plugin is built specifically for Codex and integrates with Co
 
 Tell your coding agent:
 
-```text
-Install the security-review skill from https://github.com/angelol/security-audit-skill. The installable skill is in the security-review/ subdirectory.
-```
-
-The agent can fetch the repository, locate `security-review/SKILL.md`, and install the self-contained skill using the conventions of its own harness.
+> Install this skill: https://github.com/angelol/security-audit-skill/tree/main/security-review
 
 ### Manual fallback
 
