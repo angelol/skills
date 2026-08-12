@@ -1,105 +1,33 @@
-# Security Review Skill
+# Skills
 
-A portable adaptation of the security-review workflows in OpenAI's Codex Security plugin, packaged as a standard skill for coding agents.
+A collection of reusable skills for coding agents. Each skill lives in its own self-contained directory and can be installed independently.
 
-It supports repository audits, Git diff reviews, deep multi-pass scans, threat modeling, finding validation, attack-path analysis, security fixes, vulnerability reports, hardening proposals, `SECURITY.md` policy work, and approval-gated issue tracking.
+## Available skills
 
-The Codex Security plugin is built specifically for Codex and integrates with Codex-native orchestration, MCP tools, workbench state, and UI. This skill offers roughly the same user-facing workflow coverage using ordinary Markdown and Python standard-library scripts, so it can work with any coding harness that supports skills. It has no MCP server, connector, UI form, hosted service, or agent-specific runtime dependency.
+| Skill | Description |
+|---|---|
+| [`crown-decision`](crown-decision) | Runs an adversarial multi-agent tournament of advocates, critics, and jurors to crown consequential architecture, engineering, product, protocol, security, or operational decisions. |
+| [`security-review`](security-review) | Performs evidence-led security reviews, including repository and diff scans, threat modeling, finding validation, attack-path analysis, fixes, hardening, and reporting. |
 
 ## Install
 
-Tell your coding agent:
-
-> Install this skill: https://github.com/angelol/security-audit-skill/tree/main/security-review
-
-### Manual fallback
-
-If the coding harness cannot install a skill from a repository URL, clone the repository and copy the skill directory yourself:
-
-```sh
-git clone https://github.com/angelol/security-audit-skill.git
-cp -R security-audit-skill/security-review /path/to/your-agent/skills/security-review
-```
-
-Alternatively, configure the coding harness to load `security-review/SKILL.md` directly from the checkout. If the harness does not support automatic skill discovery, point it at that file when requesting security work.
-
-## Example requests
+Give your coding agent the directory URL for the skill you want:
 
 ```text
-Use the security-review skill to audit this repository.
-Review the changes between main and HEAD for security regressions.
-Run a deep, multi-pass security review of src/auth.
-Validate this path-traversal finding against the current source.
-Fix this confirmed authorization bypass and add regression coverage.
-Create a threat model for this repository.
+Install this skill: https://github.com/angelol/skills/tree/main/crown-decision
 ```
 
-## What it preserves
-
-- Exact target and scope boundaries.
-- Repository-wide threat modeling with diff-focused review when appropriate.
-- Separate discovery, validation, attack-path, severity, and reporting stages.
-- Explicit counterevidence, proof gaps, candidate dispositions, and coverage.
-- Stable finding identities and deterministic Markdown reports.
-- Read-only scans and separately authorized fixes or external writes.
-- Offline review by default.
-
-## Portable helpers
-
-The scripts are optional and require only Python 3.
-
-Create and seal canonical review artifacts:
+Or clone the collection and copy an individual skill into your agent's skills directory:
 
 ```sh
-python3 security-review/scripts/security_review.py init \
-  --target /path/to/repository \
-  --output /tmp/security-review \
-  --mode standard
-
-python3 security-review/scripts/security_review.py validate --scan-dir /tmp/security-review
-python3 security-review/scripts/security_review.py finalize --scan-dir /tmp/security-review
+git clone https://github.com/angelol/skills.git
+cp -R skills/crown-decision /path/to/your-agent/skills/crown-decision
 ```
 
-Build deterministic source inventories and resolve nested security policies:
-
-```sh
-python3 security-review/scripts/scope_tools.py inventory \
-  --repo /path/to/repository \
-  --output /tmp/security-review/inventory.jsonl \
-  --mode standard
-
-python3 security-review/scripts/scope_tools.py policy \
-  --repo /path/to/repository \
-  --scope src/component
-```
-
-Use `python` instead of `python3` when that is the configured interpreter, such as on some Windows systems. Git is optional for repository scans and required for diff inventories.
-
-## Repository layout
-
-```text
-README.md
-LICENSE
-security-review/
-  SKILL.md
-  references/
-    adjacent-workflows.md
-    artifact-contract.md
-    evidence-pipeline.md
-    review-modes.md
-  scripts/
-    scope_tools.py
-    security_review.py
-```
-
-The repository-level README and license stay outside the installed skill. `security-review/SKILL.md` routes each request and loads only the references needed for that workflow. The helper scripts create artifacts and inventories; they never decide whether code is vulnerable.
-
-## Origin and relationship to Codex Security
-
-This skill is based on and adapted from OpenAI's [Codex Security plugin](https://github.com/openai/codex-security), which is open source under the Apache License 2.0. It preserves the plugin's evidence-led phase separation, conservative finding validation, attack-path and severity analysis, coverage accounting, remediation discipline, and adjacent security workflows in a portable skill format.
-
-The Codex Security plugin uses Codex-specific MCP calls, durable workbench orchestration, desktop progress UI, native forms, connector integrations, and token accounting. This adaptation replaces those pieces with agent-neutral instructions and local filesystem artifacts so the same broad set of security workflows can run in any coding harness that supports skills. It aims for roughly equivalent functional coverage rather than exact runtime or UI parity.
+Each directory's `SKILL.md` is the entry point. Supporting `references/`, `scripts/`, `agents/`, or `assets/` directories belong to that skill and should be installed with it.
 
 ## License
 
 Apache License 2.0. See [LICENSE](LICENSE).
+
+`security-review` is a portable adaptation of workflows from OpenAI's [Codex Security](https://github.com/openai/codex-security) project.

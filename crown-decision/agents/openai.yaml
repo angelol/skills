@@ -1,0 +1,4 @@
+interface:
+  display_name: "Crown a Decision"
+  short_description: "Run an adversarial multi-agent decision tournament"
+  default_prompt: "Use $crown-decision to adjudicate the competing designs for this decision and crown the strongest one."
